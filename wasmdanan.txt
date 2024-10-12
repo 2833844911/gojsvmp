@@ -1,0 +1,178 @@
+package main
+
+import (
+	"myvmp/ast"
+	"myvmp/evaluator"
+	"myvmp/lexer"
+	"myvmp/parse"
+	"myvmp/promise"
+)
+
+func getdt() {
+
+	code := `
+function data(strInfo){
+	var strList = [];
+	for (var i =0; i< len(strInfo); i=(i+4)){
+		var cd = len(strInfo)
+		var vhh = i+4
+		if (vhh>= cd){
+			var t1 = strInfo["slice"](i,len(strInfo));
+			for (var i2=0; i2<i+4 - cd; i2 = (i2+1)){
+				t1 = t1+" "
+			}
+			var a1 = cychar(t1[0])
+			var a2 = cychar(t1[1])
+			var a3 = cychar(t1[2])
+			var a4 = cychar(t1[3])
+			var hj = [a1,a2,a3,a4]
+			cyappend(strList,hj);
+			break
+
+		}
+		var t1 = strInfo["slice"](i,(i+4));
+		var a1 = cychar(t1[0])
+		var a2 = cychar(t1[1])
+		var a3 = cychar(t1[2])
+		var a4 = cychar(t1[3])
+		var hj = [a1,a2,a3,a4]
+		cyappend(strList,hj);
+	};
+	return strList;
+
+}
+
+
+
+
+function startFun(cbu){
+l = cbu;
+	l = l+"cbbcbbcbbcbbcbbcbbcbbcbbcbbcbbcbbcbbcbbcbbcbbcbbcbbcbb";
+	var lsbl1 = function(){
+		var kf = data(l);
+		cbb_a(kf);
+	};
+	var ks = new Promise(lsbl1);
+	var ks2 = ks["then"](function(a){
+		for (var i= 0; i<len(a); i=(i+1)){
+			for (var i2= 0; i2<len(a); i2=(i2+1)){
+				if (i == i2){
+					continue;
+				};
+				var allcd = a[i2][0] +  a[i2][1]+  a[i2][2]+  a[i2][3];
+				a[i][0] = a[i][0] ^ allcd+ 20;
+				a[i][1] = a[i][1] ^ allcd + 10;
+				if (allcd > 340 ){
+					a[i][1] = a[i][1] + 80;
+				};
+				a[i][2] = a[i][2] ^ allcd+1;
+				a[i][3] = a[i][3] ^ allcd+1;
+			};
+		};
+		cbb_b(a);
+	});
+	var dsdd = ks2["then"](function(a){cyout(a[0][0],a[1][0],a[2][0]);},function(a){
+		var alldata = [];
+		for (var i= 0; i<len(a); i=(i+1)){
+			for (var i2= 0; i2<4; i2=(i2+1)){
+				var dpppp = a[i][i2]%5
+				var jii = 100
+				try{
+					jii = (a[i][i2]>>dpppp)*3
+				}catch{
+					jii = a[i][i2] % 400
+				}
+
+				cyappend(alldata, (jii % 3000));
+				if (alldata[len(alldata)-1] >1000){
+					alldata[len(alldata)-1] = alldata[len(alldata)-1] + 1
+				}
+
+			};
+		};
+		alldata[0] = alldata[0] % 255;
+		function gid(irr){
+
+			function djki(){
+						if ((irr != alldata[0])){
+							return 0;
+						};
+						var dshu = [];
+						for (var i=0;i<32; i=(i+1) ){
+							dshu[i] = alldata[0];
+						};
+						for (var ivvv=0;ivvv<len(alldata); ivvv=(ivvv+1) ){
+							var hsioad = alldata[ivvv]*2;
+
+							dshu[ivvv%32] =  hsioad+ dshu[ivvv%32] >> 2
+							dshu[ivvv%32] = dshu[ivvv%32] % 255;
+						};
+						var alldt = {"data":dshu}
+						var vhui = JSON["stringify"](alldt);
+						cbb_a(alldt,l)
+					};
+			var kfc = new Promise(djki);
+			var hiho = kfc["then"](function(alldt2,l2){
+
+				var dshu2 = [];
+				for (var ivvv2=0;ivvv2<len(l2); ivvv2=(ivvv2+1) ){
+					var hsioad =cychar( l2[ivvv2]);
+					var hdakdasj  = ivvv2 % 32
+					var gys = alldt2["data"][hdakdasj];
+					var fsg = hsioad^gys;
+					cyappend(dshu2, fsg)
+					if (ivvv2 < 32){
+						cyappend(dshu2, gys)
+					}
+
+				};
+				var dt = {"data": dshu2};
+				cbb_a(dt)
+
+
+            })
+			hiho["then"](function(a){
+				var vhui = JSON["stringify"](a);
+				cyout(vhui);
+			})
+		}
+
+		for (var irr=0; irr<255;irr=(irr+1)){
+
+
+			gid(irr)
+
+		}
+
+	});
+}
+
+
+
+startFun("dasdasfasfafasfdasd")
+
+
+
+`
+	promise.CyJSInit()
+
+	dt := lexer.New(code)
+	kk := (*dt).Input()
+
+	fff := parse.NewParse(kk)
+	dtt := &ast.Program{Body: fff}
+	dtt.StatementNode()
+	//dd := parseToDt.PrushData(dtt)
+	//fmt.Println(dd)
+	//ss := parseToDt.LoadStr(dd)
+	//dyy := ss.(*ast.Program)
+	evaluator.StartEval(dtt.Body)
+	promise.Done()
+
+}
+func main() {
+	//c := make(chan struct{}, 0) // 创建一个空的结构通道
+	getdt()
+	//evaluator.EvalDt()
+	//<-c // 永远等待在这里，防止 main 函数退出
+}

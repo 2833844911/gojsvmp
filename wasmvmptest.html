@@ -1,0 +1,64 @@
+<html>
+<style>
+    body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin: 10px 0;
+    width: 200px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+</style>
+
+<script src="static/wasm_exec.js"></script>
+<script>
+    window.cycallback = function (a){
+        console.log("加密结果",a)
+        alert("加密结果"+ a)
+    };
+
+    window.cbbbbbbbbbbb = function (){
+        var inputValue = document.getElementById('inputBox').value;
+        getCyDt(inputValue)
+    }
+	const go = new Go();
+	WebAssembly.instantiateStreaming(fetch("https://ciyverify.com/cyvmp4.wasm"), go.importObject)
+		.then((result) => go.run(result.instance));
+
+
+</script>
+<body>
+    <div class="container">
+        <input type="text" id="inputBox" placeholder="输入加密值">
+        <button onclick="cbbbbbbbbbbb()">Submit</button>
+    </div>
+
+</body>
+</html>
